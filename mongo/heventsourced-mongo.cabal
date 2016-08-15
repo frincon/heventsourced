@@ -1,0 +1,48 @@
+name:                heventsourced-mongo
+version:             0.1.0.0
+synopsis:            Event Sourcing library for Haskell. Mongo Module.
+description:         Heventsourced is a haskell implementation of the Event Sourcing architectural pattern.
+                     .
+                     Event Sourcing is an architectural pattern that force to store the application state as a sequence of events.
+                     .
+                     This package provides mongo based Event Persistor.
+homepage:            https://github.com/frincon/heventsourced#readme
+license:             Apache
+license-file:        LICENSE.txt
+author:              Fernando Rincon
+maintainer:          Fernando Rincon <frm.rincon@gmail.com>
+copyright:           Copyright (c) 2016 Fernando Rincon
+category:            Event Sourcing
+build-type:          Simple
+cabal-version:       >=1.10
+stability:           alpha
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     EventSourcing.Mongo
+                     , EventSourcing.Mongo.MongoEventPersistor
+  build-depends:       base >= 4.7 && < 5
+                     , uuid
+                     , containers
+                     , placeholders
+                     , time
+                     , heventsourced
+                     , mongoDB
+                     , text
+                     , mtl
+                     , transformers
+  default-language:    Haskell2010
+
+test-suite heventsourced-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , heventsourced
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/githubuser/heventsourced
+  subdir:   mongo
