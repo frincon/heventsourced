@@ -1,3 +1,4 @@
+[![Travis](https://img.shields.io/travis/frincon/heventsourced.svg?maxAge=2592000)](https://travis-ci.org/frincon/heventsourced)
 # heventsourced
 Haskell implementation of the Event Sourcing architectural pattern
 
