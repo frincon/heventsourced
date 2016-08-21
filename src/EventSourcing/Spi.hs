@@ -50,6 +50,6 @@ class EventPersistor a where
  writeEvent :: (Aggregate b, EventPersistorConstraint a (Event b) ) => a -> Maybe UUID -> Event b -> IO (EventResult b)
  loadEvents :: (Aggregate b, EventPersistorConstraint a (Event b) ) => a -> Maybe UUID -> IO [EventEnvelope b]
 
-class (Show a) => StateManager a where
+class StateManager a where
  currentState :: (Aggregate b) => a -> IO (Maybe (StateEnvelope b))
  saveState :: (Aggregate b) => a -> UUID -> b -> IO ()

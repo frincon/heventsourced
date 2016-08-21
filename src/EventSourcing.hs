@@ -33,10 +33,10 @@ newEventSourcing = EventSourcingImpl
 
 execute :: (Aggregate b, EventPersistorConstraint p (Event b)) => EventSourcing p s -> Command b -> IO (Either (Error b) (Event b))
 execute (EventSourcingImpl persistor stateManager) cmd =
-  currentState stateManager >>= updatedState >>= executeState cmd
+  currentState stateManager >>= updatedState >>= executeState
   where
 
-    executeState cmd maybeStateEnvelope =
+    executeState maybeStateEnvelope =
       let maybePrevState = fmap statePayload maybeStateEnvelope
           maybePrevEventId = fmap lastEventId maybeStateEnvelope
       in
@@ -46,8 +46,7 @@ execute (EventSourcingImpl persistor stateManager) cmd =
             result <- writeEvent persistor maybePrevEventId ev
             case result of
               Ok eventEnvelope -> saveState stateManager (eventId eventEnvelope) (apply maybePrevState ev) >> return correct
-              Rejected -> updatedState maybeStateEnvelope >>= executeState cmd
-
+              Rejected -> updatedState maybeStateEnvelope >>= executeState
 
     updatedState maybeStateEnvelope = do
       let prevEventId = fmap lastEventId maybeStateEnvelope

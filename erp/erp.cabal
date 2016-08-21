@@ -1,14 +1,11 @@
-name:                heventsourced
+name:                erp
 version:             0.1.0.0
-synopsis:            Event Sourcing library for Haskell
+synopsis:            Example ERP using heventsourced
 description:         Heventsourced is a haskell implementation of the Event Sourcing architectural pattern.
                      .
                      Event Sourcing is an architectural pattern that force to store the application state as a sequence of events.
                      .
-                     This package provides basic framework to implement event sourcing in haskell. It is based in the design from
-                     https://gist.github.com/Fristi/7327904. This package provides the typeclasses to implement event sourcing and
-                     a dummy in-memory implementation of the framework. For a real use you probably want to use a concrete
-                     implementation like heventsourced-mongo along with this.
+                     This package provides an ERP example based on heventsourced
 homepage:            https://github.com/frincon/heventsourced#readme
 bug-reports:         https://github.com/frincon/heventsourced/issues
 license:             Apache-2.0
@@ -16,29 +13,33 @@ license-file:        LICENSE.txt
 author:              Fernando Rincon
 maintainer:          Fernando Rincon <frm.rincon@gmail.com>
 copyright:           Copyright (c) 2016 Fernando Rincon
-category:            Event Sourcing
 build-type:          Simple
 cabal-version:       >=1.10
-stability:           alpha
 
-library
-  ghc-options:         -Wall
+executable erp
   hs-source-dirs:      src
-  exposed-modules:     EventSourcing
-                     , EventSourcing.Aggregate
-                     , EventSourcing.Spi
-                     , EventSourcing.InMemoryEventPersistor
-                     , EventSourcing.DummyStateManager
-  build-depends:       base >= 4.7 && < 5
+  main-is:             Main.hs
+  other-modules:       Erp
+                     , Erp.Commons
+                     , Erp.World
+                     , CmdOptions
+                     , CommandLineParser
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall
+  build-depends:       base
+                     , heventsourced
+                     , heventsourced-mongo
+                     , split
                      , uuid
                      , containers
+                     , mongoDB
                      , placeholders
-                     , time
-                     , stm
+                     , text
                      , mtl
+                     , transformers
+                     , optparse-applicative
   default-language:    Haskell2010
 
-test-suite heventsourced-test
+test-suite erp-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
@@ -50,3 +51,4 @@ test-suite heventsourced-test
 source-repository head
   type:     git
   location: https://github.com/githubuser/heventsourced
+  subdir:   erp
